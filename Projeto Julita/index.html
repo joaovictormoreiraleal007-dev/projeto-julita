@@ -1,0 +1,152 @@
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EcoRelatório Ambiental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;650;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">♻</div>
+      <div>EcoRelatório <small>Plataforma de relatórios de limpeza ambiental</small></div>
+    </div>
+  </header>
+
+  <section id="portal" class="portal">
+    <div class="portal-window">
+      <div class="window-title">
+        <strong>Portal principal</strong>
+        <div class="window-controls"><span>_</span><span>□</span><span>×</span></div>
+      </div>
+      <div class="portal-content">
+        <h1>Registro de ações ambientais</h1>
+        <p>Registre uma ação de limpeza, organize os resíduos encontrados, acompanhe os indicadores automaticamente e gere um relatório técnico ambiental.</p>
+        <div class="access-grid">
+          <button class="glossy-btn" data-open-form="Coletores">Coletores</button>
+          <button class="glossy-btn secondary" data-open-form="Empresas">Empresas</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="formScreen" class="hidden">
+    <main class="main">
+      <div class="page-head">
+        <div>
+          <h1 id="formTitle">Relatório de limpeza ambiental</h1>
+          <p>Preencha somente os dados disponíveis. Os indicadores dependentes de campos vazios não serão calculados.</p>
+        </div>
+        <div class="toolbar">
+          <button class="glossy-btn secondary" id="backPortal">Voltar ao portal</button>
+        </div>
+      </div>
+
+      <form id="reportForm">
+        <section class="panel">
+          <div class="panel-title">1. Identificação da ação</div>
+          <div class="panel-body">
+            <div class="grid">
+              <div class="field wide"><label for="actionName">Nome da ação ou mutirão *</label><input id="actionName" required placeholder="Ex.: Mutirão de Limpeza da Praia Central"></div>
+              <div class="field"><label for="date">Data *</label><input id="date" type="date" required></div>
+              <div class="field"><label for="city">Município *</label><input id="city" required placeholder="Ex.: Florianópolis"></div>
+              <div class="field"><label for="state">Estado *</label><input id="state" maxlength="2" placeholder="SC" required></div>
+              <div class="field full">
+                <label>Local ou locais da atividade</label>
+                <div id="locations"></div>
+                <button type="button" class="icon-btn" id="addLocation">+ Adicionar local</button>
+              </div>
+              <div class="field"><label for="environment">Tipo de ambiente</label><input id="environment" placeholder="Ex.: marinho-costeiro"></div>
+              <div class="field wide"><label for="references">Pontos de referência</label><input id="references" placeholder="Ex.: próximo ao Farol da Barra"></div>
+              <div class="field"><label for="start">Horário de início</label><input id="start" type="time"></div>
+              <div class="field"><label for="end">Horário de término</label><input id="end" type="time"></div>
+              <div class="field"><label for="participants">Número de participantes</label><input id="participants" type="number" min="0" step="1" placeholder="Ex.: 25"></div>
+              <div class="field"><label for="duration">Duração da atividade</label><input id="duration" placeholder="Ex.: 4 horas"></div>
+              <div class="field"><label for="distance">Extensão aproximada (km)</label><input id="distance" type="number" min="0" step="0.01" placeholder="Ex.: 2.5"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">2. Objetivo e metodologia</div>
+          <div class="panel-body">
+            <div class="grid">
+              <div class="field full"><label for="objective">Objetivo da ação</label><textarea id="objective" placeholder="Ex.: sensibilizar a comunidade e reduzir o volume de resíduos na orla..."></textarea></div>
+              <div class="field full"><label for="methodology">Metodologia utilizada</label><textarea id="methodology" placeholder="Ex.: divisão em equipes, percurso pré-definido, uso de EPIs..."></textarea></div>
+              <div class="field half"><label for="collection">Como ocorreu a coleta</label><textarea id="collection" placeholder="Ex.: coleta manual ao longo da orla, com sacos identificados..."></textarea></div>
+              <div class="field half"><label for="sorting">Como ocorreu a triagem e classificação</label><textarea id="sorting" placeholder="Ex.: separação por tipo de material após a coleta..."></textarea></div>
+              <div class="field full"><label for="generalObs">Observações gerais</label><textarea id="generalObs" placeholder="Ex.: condições climáticas, apoio de parceiros, imprevistos..."></textarea></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">3. Cadastro dos resíduos</div>
+          <div class="panel-body">
+            <div class="residue-head">
+              <strong>Materiais encontrados</strong>
+              <button type="button" class="glossy-btn secondary" id="addResidue">+ Adicionar resíduo</button>
+            </div>
+            <div id="residues"></div>
+            <div id="emptyResidues" class="empty">Nenhum resíduo cadastrado. Adicione os materiais encontrados na ação.</div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">4. Informações complementares</div>
+          <div class="panel-body">
+            <div class="grid">
+              <div class="field half"><label for="highlight">Resíduos de destaque</label><textarea id="highlight" placeholder="Ex.: pneus, eletrônicos, entulho de construção..."></textarea></div>
+              <div class="field half"><label for="fishing">Materiais relacionados à pesca</label><textarea id="fishing" placeholder="Ex.: redes, anzóis, linhas e boias abandonadas..."></textarea></div>
+              <div class="field"><label for="cigarettes">Quantidade de bitucas</label><input id="cigarettes" type="number" min="0" step="1" placeholder="Ex.: 120"></div>
+              <div class="field wide"><label for="sortingInfo">Informações adicionais sobre a triagem</label><textarea id="sortingInfo" placeholder="Ex.: critérios usados na classificação dos materiais..."></textarea></div>
+              <div class="field half"><label for="destinationObs">Observações sobre a destinação</label><textarea id="destinationObs" placeholder="Ex.: encaminhado à cooperativa de reciclagem local..."></textarea></div>
+              <div class="field half"><label for="recommendations">Recomendações</label><textarea id="recommendations" placeholder="Ex.: ampliar pontos de coleta seletiva na região..."></textarea></div>
+              <div class="field full"><label for="conclusion">Considerações finais</label><textarea id="conclusion" placeholder="Ex.: resumo dos resultados e próximos passos sugeridos..."></textarea></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel indicators-panel">
+          <div class="panel-title">5. Indicadores automáticos</div>
+          <div class="panel-body">
+            <div id="metrics" class="metrics"></div>
+            <div class="footer-note">Os indicadores são calculados somente a partir dos valores informados no formulário.</div>
+          </div>
+        </section>
+
+        <div class="actions">
+          <button type="button" class="glossy-btn secondary" id="clearForm">Limpar formulário</button>
+          <button type="submit" class="glossy-btn green">Gerar relatório</button>
+        </div>
+      </form>
+    </main>
+  </section>
+
+  <div id="reportModal" class="hidden" aria-hidden="true">
+    <div class="report-window">
+      <div class="report-toolbar">
+        <strong>Pré-visualização do relatório</strong>
+        <div class="toolbar">
+          <button class="glossy-btn secondary" id="editReport">Voltar para editar</button>
+          <button class="glossy-btn secondary" id="printReport">Imprimir / PDF</button>
+          <button class="glossy-btn green" id="downloadPdf">Baixar PDF</button>
+          <button class="glossy-btn secondary" id="newReport">Novo relatório</button>
+        </div>
+      </div>
+      <article id="reportPaper" class="report-paper"></article>
+    </div>
+  </div>
+  <div id="toast" class="toast hidden"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
