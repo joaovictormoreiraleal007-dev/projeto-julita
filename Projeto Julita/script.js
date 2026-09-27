@@ -199,3 +199,20 @@ async function downloadPDF(){
   doc.save(`${(val("actionName")||"relatorio-ambiental").toLowerCase().replace(/[^a-z0-9]+/gi,"-")}.pdf`);
 }
 $("downloadPdf").onclick=downloadPDF;
+
+function paintFieldTitles(){
+  function lerpColor(a,b,t){
+    const ar=(a>>16)&255, ag=(a>>8)&255, ab=a&255;
+    const br=(b>>16)&255, bg=(b>>8)&255, bb=b&255;
+    const rr=Math.round(ar+(br-ar)*t), rg=Math.round(ag+(bg-ag)*t), rb=Math.round(ab+(bb-ab)*t);
+    return "#"+((1<<24)+(rr<<16)+(rg<<8)+rb).toString(16).slice(1);
+  }
+  const start=0x2f6fd9, end=0x4f9e5f; // azul -> verde
+  const labels=[...document.querySelectorAll(".main .grid > .field > label")];
+  const n=labels.length;
+  labels.forEach((lb,i)=>{
+    const t=n>1?i/(n-1):0;
+    lb.style.color=lerpColor(start,end,t);
+  });
+}
+paintFieldTitles();
